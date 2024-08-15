@@ -1,4 +1,3 @@
-JAVA
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('contactForm');
     const nomeInput = document.getElementById('nome');
@@ -55,3 +54,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
