@@ -1,24 +1,150 @@
+/* Importando a fonte do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Estilo global */
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    font-family: 'Roboto', sans-serif; /* Usando a fonte Roboto */
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }
-.form-container {
+
+/* Estilo do título */
+h2 {
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Estilo do formulário */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 500px;
-    margin: auto;
-}
-.form-group {
-    margin-bottom: 15px;
-}
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-.form-group input, .form-group textarea {
     width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
+    margin: 20px auto;
+    text-align: center; /* Centraliza o conteúdo do formulário */
 }
-.form-group .error {
+
+/* Estilo dos rótulos */
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #333;
+}
+
+/* Estilo dos inputs e textarea */
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 90%; /* Define uma largura de 90% */
+    max-width: 400px; /* Limita a largura máxima para centralizar */
+    padding: 10px;
+    margin: 10px auto; /* Centraliza os campos */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: block; /* Faz os campos se comportarem como blocos */
+    text-align: left; /* Alinha o texto dentro do campo à esquerda */
+}
+
+/* Estilo do botão de envio */
+input[type="submit"] {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto; /* Centraliza o botão */
+    font-family: 'Roboto', sans-serif; /* Usando a fonte Roboto */
+}
+
+input[type="submit"]:hover {
+    background-color: #000000;
+}
+
+/* Estilo do aviso */
+.aviso {
+    background-color: #ff0000;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px; /* Tamanho da fonte */
+    padding: 10px;
+    margin-top: 20px;
+}
+
+/* Estilo da lista */
+ul {
+    list-style-type: none; /* Remove marcadores da lista */
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px; /* Espaçamento entre os itens da lista */
+}
+
+.error-message {
     color: red;
-    font-size: 0.875em;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
 }
+
+java:
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("form");
+    const nomeInput = document.getElementById("nome");
+    const emailInput = document.getElementById("email");
+    const mensagemInput = document.getElementById("mensagem");
+
+    // Função para limpar mensagens de erro
+    function clearErrors() {
+        document.querySelectorAll(".error-message").forEach(span => span.textContent = "");
+    }
+
+    // Função para exibir mensagem de erro
+    function showError(input, message) {
+        const errorSpan = input.nextElementSibling;
+        errorSpan.textContent = message;
+    }
+
+    form.addEventListener("submit", function(event) {
+        // Limpa mensagens de erro anteriores
+        clearErrors();
+        let valid = true;
+
+        // Validação do campo nome
+        if (nomeInput.value.trim().length < 3) {
+            showError(nomeInput, "O nome deve ter pelo menos 3 caracteres.");
+            valid = false;
+        }
+
+        // Validação do campo email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value.trim())) {
+            showError(emailInput, "Por favor, insira um email válido.");
+            valid = false;
+        }
+
+        // Validação do campo mensagem
+        if (mensagemInput.value.trim().length < 10) {
+            showError(mensagemInput, "A mensagem deve ter pelo menos 10 caracteres.");
+            valid = false;
+        }
+
+        // Se houver algum erro, impede o envio do formulário
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
+});
